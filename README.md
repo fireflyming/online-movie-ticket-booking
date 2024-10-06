@@ -17,7 +17,7 @@ It has two parts:
 
   **2. Demo:** The demo to show the usage of **core** service
 
-      By default, the demo provides TCP service running on port 3365, and it supports 20 users to baok simultaneously. 
+      By default, the demo provides TCP service running on port 3365, and it supports 20 users to book simultaneously. 
 
 
 
