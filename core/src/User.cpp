@@ -53,6 +53,8 @@ User::Result User::doRegister(
     m_email = email;
     m_grade = grade;
     m_userId = g_userId.fetch_add(1);
+
+    return Result::Result0;
 }
 
 int User::getUserId() const
