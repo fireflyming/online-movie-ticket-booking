@@ -19,7 +19,11 @@ enable_testing()
 find_package(GTest REQUIRED)
 
 set(sources src/User.cpp)
-set(test_sources ${sources} src/UserTest.cpp)
+set(test_sources ${sources} src/UserTest.cpp src/MovieTest.cpp)
 add_executable(test_core ${test_sources})
 target_link_libraries(test_core gtest gmock GTest::gtest_main)
+
+
+# build core library, make it can be delivered in binary
+# add_library(core, SHARED, ${SOURCES})_
 
