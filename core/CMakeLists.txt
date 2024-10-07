@@ -19,7 +19,7 @@ enable_testing()
 find_package(GTest REQUIRED)
 
 set(sources src/User.cpp)
-set(test_sources ${sources} src/UserTest.cpp src/MovieTest.cpp)
+set(test_sources ${sources} src/UserTest.cpp src/MovieTest.cpp src/TheaterTest.cpp)
 add_executable(test_core ${test_sources})
 target_link_libraries(test_core gtest gmock GTest::gtest_main)
 
