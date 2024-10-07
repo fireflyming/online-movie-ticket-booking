@@ -18,8 +18,9 @@ ENDIF()
 enable_testing()
 find_package(GTest REQUIRED)
 
-set(sources src/User.cpp)
+set(sources src/User.cpp src/Show.cpp)
 set(test_sources ${sources} src/UserTest.cpp src/MovieTest.cpp src/TheaterTest.cpp)
+set(test_sources ${test_sources} src/ShowTest.cpp)
 add_executable(test_core ${test_sources})
 target_link_libraries(test_core gtest gmock GTest::gtest_main)
 
