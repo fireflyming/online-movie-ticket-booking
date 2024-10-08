@@ -1,30 +1,48 @@
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <sstream>
 #include <iostream>
+#include <memory>
+#include <utility>
+#include <thread>
+#include <boost/asio.hpp>
 
 #include "inc/Ticket.h"
 #include "../inc/BookService.h"
 
 using namespace std;
+using boost::asio::ip::tcp;
 
 static BookService g_bookService;
+static const int g_tcp_port = 3365;
 
 string welcome();
 void process_stdin();
 string process_command(const char *);
 
+// running backend tcp service thread
+void run_tcp_server(int tcp_port);
+
 int main(int argc, char *argv[])
 {
     g_bookService.loadData();
 
-    //TODO start TCP service
+    try
+    {
+        //run_tcp_server(g_tcp_port);
+        thread tcp(run_tcp_server, g_tcp_port);
+        process_stdin();
+        tcp.join();
 
-    process_stdin();  
+    }
+    catch (std::exception& e)
+    {
+        std::cerr << "Exception: " << e.what() << "\n";
+    }
 
     return 0;
 }
-
 
 string welcome()
 {
@@ -90,5 +108,113 @@ string process_command(const char *buf)
         return oss.str();
     }
     return "";
+}
+
+
+//
+// async_tcp_echo_server.cpp
+// ~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+// Copyright (c) 2003-2024 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+
+class session
+  : public std::enable_shared_from_this<session>
+{
+public:
+  session(tcp::socket socket)
+    : socket_(std::move(socket))
+  {
+  }
+
+  void start()
+  {
+    string msg = welcome();
+    memset(data_, '\0', sizeof(data_));
+    strncpy(data_, msg.c_str(), sizeof(data_)-1);
+    int length = msg.length();
+    do_write(length);
+    
+    do_read();
+  }
+
+private:
+  void do_read()
+  {
+    auto self(shared_from_this());
+    socket_.async_read_some(boost::asio::buffer(data_, max_length),
+        [this, self](boost::system::error_code ec, std::size_t length)
+        {
+          if (!ec)
+          {
+            string s = process_command(data_);
+            memset(data_, '\0', sizeof(data_));
+            strncpy(data_, s.c_str(), sizeof(data_)-1);
+            length = s.length();
+            do_write(length);
+          }
+        });
+  }
+
+  void do_write(std::size_t length)
+  {
+    auto self(shared_from_this());
+    boost::asio::async_write(socket_, boost::asio::buffer(data_, length),
+        [this, self](boost::system::error_code ec, std::size_t /*length*/)
+        {
+          if (!ec)
+          {
+            do_read();
+          }
+        });
+  }
+
+  tcp::socket socket_;
+  enum { max_length = 4096 };
+  char data_[max_length];
+};
+
+class server
+{
+public:
+  server(boost::asio::io_context& io_context, short port)
+    : acceptor_(io_context, tcp::endpoint(tcp::v4(), port))
+  {
+    do_accept();
+  }
+
+private:
+  void do_accept()
+  {
+    acceptor_.async_accept(
+        [this](boost::system::error_code ec, tcp::socket socket)
+        {
+          if (!ec)
+          {
+            std::make_shared<session>(std::move(socket))->start();
+          }
+
+          do_accept();
+        });
+  }
+
+  tcp::acceptor acceptor_;
+};
+
+void run_tcp_server(int port)
+{
+  try
+  {
+    boost::asio::io_context io_context;
+    server s(io_context, port);
+    io_context.run();
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << "Exception: " << e.what() << "\n";
+  }
 }
 
