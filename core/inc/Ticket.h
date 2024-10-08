@@ -26,7 +26,7 @@ public:
 
     //! copy and assign constructor are not allowed
     Ticket(const Ticket&) = delete;
-    Ticket operator=(const Ticket&) = delete;
+    Ticket& operator=(const Ticket&) = delete;
 
     //! destructor
     ~Ticket();

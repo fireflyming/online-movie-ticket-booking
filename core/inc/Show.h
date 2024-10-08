@@ -27,7 +27,7 @@ public:
 
     //! copy and assign constructor are not allowed
     Show(const Show&) = delete;
-    Show operator=(const Show&) = delete;
+    Show& operator=(const Show&) = delete;
 
     //! destructor 
     ~Show() {}

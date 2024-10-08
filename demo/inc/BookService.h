@@ -38,7 +38,7 @@ public:
 
     //! copy and assign constructor are not allowed
     BookService(const BookService&) = delete;
-    BookService operator=(const BookService&) = delete;
+    BookService& operator=(const BookService&) = delete;
 
     //! load data from storage
     /*

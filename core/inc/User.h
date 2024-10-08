@@ -47,7 +47,7 @@ public:
 
      //! copy and assign constructor are not allowed
      User (const User&)  = delete;
-     User operator=(const User&) = delete;
+     User& operator=(const User&) = delete;
 
      //! destructor
      ~User();
