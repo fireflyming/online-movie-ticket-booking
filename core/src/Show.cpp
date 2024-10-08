@@ -11,8 +11,9 @@ static boost::atomic<int> g_showId(1);
 
 Show::Show(shared_ptr<Movie> movie,
            shared_ptr<Theater> theater,
-           string starttime)
-    : m_movie(movie), m_theater(theater), m_starttime(starttime)
+           string starttime,
+           int price)
+    : m_movie(movie), m_theater(theater), m_starttime(starttime), m_price(price)
 {
     m_showId = g_showId.fetch_add(1);
 

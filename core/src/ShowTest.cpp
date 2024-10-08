@@ -15,10 +15,12 @@ TEST(ShowTest, ctor)
     shared_ptr<Theater> theater = make_shared<Theater>(theater_name, theater_capacity);
 
     string show_starttime = "2024-10-07 14:30:00";
-    Show show(movie, theater, show_starttime);
+    int price = 45;
+    Show show(movie, theater, show_starttime, price);
     EXPECT_EQ(show.getMovieName(), movie_name);
     EXPECT_EQ(show.getTheaterName(), theater_name);
     EXPECT_EQ(show.getShowId(), 1);
+    EXPECT_EQ(show.getPrice(), price);
 }
 
 TEST(ShowTest, showSeats)
@@ -32,7 +34,7 @@ TEST(ShowTest, showSeats)
     shared_ptr<Theater> theater = make_shared<Theater>(theater_name, theater_capacity);
 
     string show_starttime = "2024-10-07 14:30:00";
-    Show show(movie, theater, show_starttime);
+    Show show(movie, theater, show_starttime, 45);
     string all_available("0[O] 1[O] 2[O] 3[O] 4[O]");
     EXPECT_EQ(show.showSeats(), all_available);
 
@@ -53,7 +55,7 @@ TEST(ShowTest, bookSeats)
     shared_ptr<Theater> theater = make_shared<Theater>(theater_name, theater_capacity);
 
     string show_starttime = "2024-10-07 14:30:00";
-    Show show(movie, theater, show_starttime);
+    Show show(movie, theater, show_starttime, 50);
 
     // bad case: book non-exist seat
     vector<Show::seat_t> seats { static_cast<Show::seat_t>(theater_capacity) + 1 };
@@ -95,7 +97,7 @@ TEST(ShowTest, cancelSeats)
     shared_ptr<Theater> theater = make_shared<Theater>(theater_name, theater_capacity);
 
     string show_starttime = "2024-10-07 14:30:00";
-    Show show(movie, theater, show_starttime);
+    Show show(movie, theater, show_starttime, 50);
 
     // first, book all seats
     vector<Show::seat_t> seats { 0, 1, 2, 3, 4 };

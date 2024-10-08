@@ -36,14 +36,14 @@ TEST(TicketTest, print)
 
     // a show for booking
     string show_starttime = "2024-10-07 14:30:00";
-    shared_ptr<Show> show = make_shared<Show>(movie, theater, show_starttime);
+    shared_ptr<Show> show = make_shared<Show>(movie, theater, show_starttime, 30);
 
     // booking a seat
     vector<Show::seat_t> seats { 0 };
     EXPECT_TRUE(show->bookSeats(seats));
 
     // generate a ticket if success
-    int price = 80;
+    int price = show->getPrice();
     Ticket ticket(user, show, seats[0], price);
 
     ostringstream ticket_info;

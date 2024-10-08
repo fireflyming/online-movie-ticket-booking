@@ -16,8 +16,14 @@ public:
     typedef unsigned seat_t;
 
     //! constructor
+    /*!
+      \param movie the movie
+      \param theater the theater
+      \param stattime show start time
+      \param price show price
+    */
     Show(std::shared_ptr<Movie> movie,
-         std::shared_ptr<Theater> theater, std::string starttime);
+         std::shared_ptr<Theater> theater, std::string starttime, int price);
 
     //! copy and assign constructor are not allowed
     Show(const Show&) = delete;
@@ -31,6 +37,12 @@ public:
       \return int show id
      */ 
     int getShowId() const { return m_showId; } 
+
+    //! get show price
+    /*!
+      \return int show price
+     */
+    int getPrice() const { return m_price; }
 
     //! get start time
     /*!
@@ -76,6 +88,7 @@ public:
 
 private:
     int m_showId;    /*!< show id, be unique */
+    int m_price;     /*!< show price */
     std::string m_starttime; /*!< the show start time YYYY-MM-DD HH:MM:SS */
     //std::string m_endtime;   /*!< the show end time */
     std::shared_ptr<Movie> m_movie; /*!< the movie be playing */
