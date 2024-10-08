@@ -25,3 +25,4 @@ set(test_sources ${sources} src/BookServiceTest.cpp)
 add_executable(test_demo ${test_sources})
 target_link_libraries(test_demo gtest gmock GTest::gtest_main)
 
+add_executable(BookApp ${sources} src/BookApplication.cpp)
