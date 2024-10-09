@@ -115,7 +115,7 @@ Below welcomed message will be displayed on the term after **BookApp** startup.
 >
 >  'book <show> <seat> - book a show seat
    
-2) Opearate will a tcp client, e.g. telnet, to connect to the booking service
+2) Opearate with a tcp client, e.g. telnet, to connect to the booking service
 >liming@x230:~/workspace/github/online-movie-ticket-booking/demo/build$ telnet 127.0.0.1 3365
 >
 >Trying 127.0.0.1...
@@ -135,6 +135,8 @@ Below welcomed message will be displayed on the term after **BookApp** startup.
 >  'book <show> <seat> - book a show seat
 
 You can more than one telnet client at the same time. 
+
+Try input commands and check the output. Have fun!
 
 # TODO List
 1. Solve the issue which blocks generate unit test coverage report
