@@ -28,3 +28,27 @@ target_link_libraries(test_core gtest gmock GTest::gtest_main)
 # build core library, make it can be delivered in binary
 # add_library(core, SHARED, ${SOURCES})_
 
+# target to generate API documation with Doxygen
+# find_package(Doxygen)
+# option(BUILD_DOCUMENTATION "Create the HTML based API documentation(requires Doxygen)" ${DOXYGEN_FOUND})
+# 
+# if(BUILD_DOCUMENTATION)
+#     if (NOT DOXYGEN_FOUND)
+#         message(FATAL_ERROR "Doxygen is needed to build the documentation.")
+#     endif()
+# 
+#     #set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
+#     set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/doc/Doxyfile)
+# 
+#     #configuration_file(${doxyfile_in} ${doxyfile} @ONLY)
+#     configuration_file(${doxyfile} @ONLY)
+# 
+#     add_custom_target(doc
+#         COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+#         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+#         COMMENT "Generating API documentation with Doxygen"
+#         VERBATIM
+#     )
+# 
+#     # install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION share/doc)
+# endif()
