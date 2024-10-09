@@ -11,9 +11,9 @@ It has two parts:
 
 **1. Core:** The core service to provice functionalities:
   
--- cinema manager: managing theater(s), movie(s), show(s);
+- cinema manager: managing theater(s), movie(s), show(s);
      
--- theatergoer: to booking, cancelling seat(s);
+- theatergoer: to booking, cancelling seat(s);
 
 **2. Demo:** The demo to show the usage of **core** service
 
