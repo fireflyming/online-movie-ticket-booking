@@ -138,7 +138,25 @@ You can more than one telnet client at the same time.
 
 Try input commands and check the output. Have fun!
 
+# Generate UT coverage report
+
+The code coverage report can be produced with procedure:
+>**cd repo_directory_you_clone_the_code**
+>
+>**cd build**
+>
+>**./core/test_core**
+>
+>**lcov --ignore-errors inconsistent --capture --directory ./core/CMakeFiles/test_core.dir/src/ --output-file coverage**
+>
+>**genhtml coverage --output-directory core_coverage**
+
+Open **core_coverage/index.html** by Web browser to check the code coverage of unit testing.
+
 # TODO List
-1. Solve the issue which blocks generate unit test coverage report
+<del>1. Solve the issue which blocks generate unit test coverage report</del>
+
+See **Generate UT coverage report**
+
 2. Verify on Windows 10 environment
 3. Docker support? The dock service has been blocked in China, need to apply a Cloud machine to try.
